@@ -9,12 +9,24 @@
     android:background="@drawable/puppy">
 
 
-    <EditText
-        android:id="@+id/edit_text"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp"
-        android:hint="@string/search"/>
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
+        android:requiresFadingEdge="vertical"
+        app:cardCornerRadius="20dp">
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:hint="@string/search"
+            android:background="@color/light_yellow"
+            android:singleLine="true"
+            android:lineBreakStyle="normal"/>
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dog_list"
