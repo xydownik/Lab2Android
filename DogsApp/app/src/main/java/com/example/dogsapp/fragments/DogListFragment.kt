@@ -46,35 +46,35 @@ class DogListFragment : Fragment() {
             if (searchQuery.isEmpty()) {
                 adapter.submitList(original)
             } else {
-                val list = original.filter{
-                    it.name.contains(searchQuery)
+                val list = original.filter {
+                    it.name.contains(searchQuery, ignoreCase = true)
                 }
-
                 adapter.submitList(ArrayList(list))
+
+                fetchDogsByName(searchQuery)
             }
         }
         setupUI()
 
-        val client = ApiClient.instance
-        val response = client.fetchDogList()
-        response.enqueue(object : Callback<List<Dog>> {
-            override fun onResponse(
-                call: Call<List<Dog>>,
-                response: Response<List<Dog>>
-            ) {
-                response.body()?.let {
-                    adapter.submitList(response.body())
-                    original = response.body()!!
-                }
+    }
 
+    private fun fetchDogsByName(name: String) {
+        val client = ApiClient.instance
+        val response = client.fetchDogList(name)
+        response.enqueue(object : Callback<List<Dog>> {
+            override fun onResponse(call: Call<List<Dog>>, response: Response<List<Dog>>) {
+                response.body()?.let {
+                    adapter.submitList(it)
+                    original = it
+                }
             }
-//
+
             override fun onFailure(call: Call<List<Dog>>, t: Throwable) {
                 println("${t.message}")
             }
-
         })
     }
+
 
 
 
